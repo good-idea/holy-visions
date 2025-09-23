@@ -1,8 +1,10 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --afi-pink: #e68699;
+  --afi-purple: #5e366e;
 }
 
 @theme inline {
