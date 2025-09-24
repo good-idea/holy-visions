@@ -1,0 +1,82 @@
+.art-deco-border {
+  display: grid;
+  grid-template:
+    'c1 t1 t2 t3 c2' 40px
+    'l1 x x x r1' 1fr
+    'l2 x x x r2' 80px
+    'l3 x x x r3' 1fr
+    'c3 b1 b2 b3 c4' 40px / 40px minmax(0, 15em) 80px minmax(0, 15em) 40px;
+  justify-content: center;
+  & > svg {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.art-deco-border__inner {
+  grid-area: x;
+  padding: 1.25em;
+}
+
+.c1 {
+  grid-area: c1;
+}
+.c2 {
+  grid-area: c2;
+}
+.c3 {
+  grid-area: c3;
+}
+.c4 {
+  grid-area: c4;
+}
+.t1 {
+  grid-area: t1;
+}
+.t2 {
+  grid-area: t2;
+}
+.t3 {
+  grid-area: t3;
+}
+.b1 {
+  grid-area: b1;
+}
+.b2 {
+  grid-area: b2;
+}
+.b3 {
+  grid-area: b3;
+}
+.l1 {
+  grid-area: l1;
+}
+.l2 {
+  grid-area: l2;
+}
+.l3 {
+  grid-area: l3;
+}
+.r1 {
+  grid-area: r1;
+}
+.r2 {
+  grid-area: r2;
+}
+.r3 {
+  grid-area: r3;
+}
+
+svg {
+  stroke: currentColor;
+  fill: none;
+  overflow: visible;
+}
+
+path {
+  vector-effect: non-scaling-stroke;
+}
+
+.pieces {
+  display: none;
+}
