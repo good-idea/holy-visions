@@ -13,31 +13,50 @@ type StyleTransition = { time: number; style: React.CSSProperties }
 type ElementConfig = {
   duration: number
   styleTransitions: StyleTransition[]
+  transitionProperties: string
   initialStyles?: React.CSSProperties
 }
 
 const CONFIG: Record<string, ElementConfig> = {
   background: {
     duration: 1,
+    transitionProperties: 'background-color',
     styleTransitions: [{ time: 0, style: { backgroundColor: '#e68699' } }],
   },
   zoltar: {
     duration: 0.5,
+    transitionProperties: 'opacity, transform',
     styleTransitions: [
-      { time: 0, style: { opacity: 0, pointerEvents: 'none' } },
+      {
+        time: 0,
+        style: { opacity: 0, transform: 'scale(0.925)', pointerEvents: 'none' },
+      },
       { time: 0.5, style: { opacity: 0, display: 'none' } },
     ],
   },
   smoke: {
     duration: 0.5,
+    transitionProperties: 'opacity',
     styleTransitions: [{ time: 0.5, style: { opacity: 0 } }],
   },
   fortune: {
     duration: 0.4,
-    initialStyles: { opacity: 0, display: 'none' },
+    transitionProperties: 'opacity, transform',
+    initialStyles: {
+      opacity: 0,
+      display: 'none',
+      transform: 'translateY(1.5rem)',
+    },
     styleTransitions: [
       { time: 0.5, style: { display: 'block' } },
-      { time: 0.6, style: { display: 'block', opacity: 1 } },
+      {
+        time: 0.6,
+        style: {
+          display: 'block',
+          transform: 'translateY(0)',
+          opacity: 1,
+        },
+      },
     ],
   },
 } as const
@@ -53,7 +72,10 @@ const getInitialStyle = (
   const elementConfig = CONFIG[element]
   const initialStyles = elementConfig.initialStyles || {}
   return {
-    transition: `all ${Math.round(duration * elementConfig.duration)}ms`,
+    transitionProperty: elementConfig.transitionProperties,
+    transitionDuration: `${Math.round(duration * elementConfig.duration)}ms`,
+    transitionTimingFunction: 'ease-in-out',
+    // transition: `${elementConfig.transitionProperties} ${Math.round(duration * elementConfig.duration)}ms`,
     ...initialStyles,
   }
 }

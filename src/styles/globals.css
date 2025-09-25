@@ -13,8 +13,10 @@
   --color-purple: var(--afi-purple);
   --font-serif: 'Big Caslon FB', serif;
 
-  --text-3xl: 6.5em;
-  --text-2xl: 8rem;
+  --text-3xl: 8rem;
+  --text-2xl: 6.5rem;
+  --text-xl: 4rem;
+  --text-md: 2rem;
 }
 
 html,

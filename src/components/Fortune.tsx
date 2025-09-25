@@ -11,7 +11,7 @@ export const Fortune: FC = () => {
   return (
     <div className="px-2 w-full flex flex-col items-center">
       <Image
-        className="max-h-[80dvh] object-contain"
+        className="max-h-[75dvh] object-contain"
         src={randomFortune.current}
         width={1080}
         height={1920}
