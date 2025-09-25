@@ -12,6 +12,9 @@
   --color-pink: var(--afi-pink);
   --color-purple: var(--afi-purple);
   --font-serif: 'Big Caslon FB', serif;
+
+  --text-3xl: 6.5em;
+  --text-2xl: 8rem;
 }
 
 html,

@@ -1,56 +1,101 @@
 import { useState, useCallback, useRef, useEffect } from 'react'
 
-// Default options
-const DEFAULT_OPTIONS: Required<UseAnimationTimelineOptions> = {
-  duration: 4500,
-}
-
-// Animation transition timing constants (as percentage of total duration)
-const TRANSITION_TIMES = {
-  background: { start: 0, end: 1 },
-  zoltar: { start: 0.2, end: 0.5 },
-  smoke: { start: 0, middle: 0.5, end: 1 },
-  fortune: { start: 0.5, end: 1 },
-} as const
-
-export interface AnimationState {
-  background: 'black' | 'pink'
-  zoltar: 'visible' | 'hidden'
-  smoke: 'hidden' | 'visible'
-  fortune: 'hidden' | 'visible'
-}
-
-export interface AnimationStyles {
+export type AnimationStyles = {
   background: React.CSSProperties
   zoltar: React.CSSProperties
   smoke: React.CSSProperties
   fortune: React.CSSProperties
+  [key: string]: React.CSSProperties
 }
 
-export interface UseAnimationTimelineReturn {
-  /** Current animation state */
-  state: AnimationState
-  /** CSS styles for each element */
-  styles: AnimationStyles
-  /** Click handler to trigger the animation sequence */
-  handleClick: () => void
+type StyleTransition = { time: number; style: React.CSSProperties }
+
+type ElementConfig = {
+  duration: number
+  styleTransitions: StyleTransition[]
+  initialStyles?: React.CSSProperties
 }
 
-export interface UseAnimationTimelineOptions {
-  /** Overall duration of the animation in milliseconds (default: 4500ms) */
-  duration?: number
+const CONFIG: Record<string, ElementConfig> = {
+  background: {
+    duration: 1,
+    styleTransitions: [{ time: 0, style: { backgroundColor: '#e68699' } }],
+  },
+  zoltar: {
+    duration: 0.5,
+    styleTransitions: [
+      { time: 0, style: { opacity: 0, pointerEvents: 'none' } },
+      { time: 0.5, style: { opacity: 0, display: 'none' } },
+    ],
+  },
+  smoke: {
+    duration: 0.5,
+    styleTransitions: [{ time: 0.5, style: { opacity: 0 } }],
+  },
+  fortune: {
+    duration: 0.4,
+    initialStyles: { opacity: 0, display: 'none' },
+    styleTransitions: [
+      { time: 0.5, style: { display: 'block' } },
+      { time: 0.6, style: { display: 'block', opacity: 1 } },
+    ],
+  },
+} as const
+
+type UseTransitionStylesOptions = {
+  duration: number
 }
 
-export const useAnimationTimeline = (
-  options: UseAnimationTimelineOptions = {},
-): UseAnimationTimelineReturn => {
-  const { duration } = { ...DEFAULT_OPTIONS, ...options }
-  const [state, setState] = useState<AnimationState>({
-    background: 'black',
-    zoltar: 'visible',
-    smoke: 'hidden',
-    fortune: 'hidden',
-  })
+const getInitialStyle = (
+  duration: number,
+  element: keyof typeof CONFIG,
+): React.CSSProperties => {
+  const elementConfig = CONFIG[element]
+  const initialStyles = elementConfig.initialStyles || {}
+  return {
+    transition: `all ${Math.round(duration * elementConfig.duration)}ms`,
+    ...initialStyles,
+  }
+}
+
+const getInitialStyles = (duration: number): AnimationStyles => {
+  return {
+    background: getInitialStyle(duration, 'background'),
+    zoltar: getInitialStyle(duration, 'zoltar'),
+    smoke: getInitialStyle(duration, 'smoke'),
+    fortune: getInitialStyle(duration, 'fortune'),
+  }
+}
+type TransitionConfig = {
+  startTime: number
+  key: string
+  newStyles: React.CSSProperties
+}
+
+const getAllTransitions = (duration: number): TransitionConfig[] => {
+  return Object.entries(CONFIG).reduce<TransitionConfig[]>(
+    (prev, [key, value]) => {
+      const stylesForElement: TransitionConfig[] = value.styleTransitions.map(
+        (styleTransition) => {
+          return {
+            key,
+            startTime: styleTransition.time * duration,
+            newStyles: styleTransition.style,
+          }
+        },
+      )
+      return [...prev, ...stylesForElement]
+    },
+    [],
+  )
+}
+
+export const useTransitionStyles = ({
+  duration,
+}: UseTransitionStylesOptions) => {
+  const [styles, setStyles] = useState<AnimationStyles>(
+    getInitialStyles(duration),
+  )
 
   const timeoutRefs = useRef<NodeJS.Timeout[]>([])
 
@@ -64,112 +109,27 @@ export const useAnimationTimeline = (
     return clearTimeouts // Cleanup on unmount
   }, [clearTimeouts])
 
-  const handleClick = useCallback(() => {
+  const beginTransition = () => {
     clearTimeouts()
 
-    // Reset to initial state first
-    setState({
-      background: 'black',
-      zoltar: 'visible',
-      smoke: 'hidden',
-      fortune: 'hidden',
+    const transitions = getAllTransitions(duration)
+    console.log(transitions)
+
+    transitions.forEach((transition) => {
+      const timeout = setTimeout(() => {
+        setStyles((prevStyles) => {
+          return {
+            ...prevStyles,
+            [transition.key]: {
+              ...prevStyles[transition.key],
+              ...transition.newStyles,
+            },
+          }
+        })
+      }, transition.startTime)
+      timeoutRefs.current.push(timeout)
     })
-
-    // Calculate timing based on transition constants
-    const backgroundStartTime = Math.round(
-      duration * TRANSITION_TIMES.background.start,
-    )
-    const zoltarHideTime = Math.round(duration * TRANSITION_TIMES.zoltar.start)
-    const smokeShowTime = Math.round(duration * TRANSITION_TIMES.smoke.start)
-    const smokeHideTime = Math.round(duration * TRANSITION_TIMES.smoke.middle)
-    const fortuneShowTime = Math.round(
-      duration * TRANSITION_TIMES.fortune.start,
-    )
-
-    const timeouts: NodeJS.Timeout[] = []
-
-    // Background transition (black->pink)
-    timeouts.push(
-      setTimeout(() => {
-        setState((prev) => ({
-          ...prev,
-          background: 'pink',
-        }))
-      }, backgroundStartTime),
-    )
-
-    // Zoltar transition (visible->hidden)
-    timeouts.push(
-      setTimeout(() => {
-        setState((prev) => ({
-          ...prev,
-          zoltar: 'hidden',
-        }))
-      }, zoltarHideTime),
-    )
-
-    // Smoke show transition (hidden->visible)
-    timeouts.push(
-      setTimeout(() => {
-        setState((prev) => ({
-          ...prev,
-          smoke: 'visible',
-        }))
-      }, smokeShowTime),
-    )
-
-    // Smoke hide transition (visible->hidden)
-    timeouts.push(
-      setTimeout(() => {
-        setState((prev) => ({
-          ...prev,
-          smoke: 'hidden',
-        }))
-      }, smokeHideTime),
-    )
-
-    // Fortune show transition (hidden->visible)
-    timeouts.push(
-      setTimeout(() => {
-        setState((prev) => ({
-          ...prev,
-          fortune: 'visible',
-        }))
-      }, fortuneShowTime),
-    )
-
-    timeoutRefs.current = timeouts
-  }, [clearTimeouts, duration])
-
-  // Generate CSS styles based on current state and duration
-  const styles: AnimationStyles = {
-    background: {
-      backgroundColor: state.background === 'black' ? '#000000' : '#e68699',
-      transition: `background-color ${Math.round(duration * (TRANSITION_TIMES.background.end - TRANSITION_TIMES.background.start))}ms ease-in-out`,
-    },
-    zoltar: {
-      opacity: state.zoltar === 'visible' ? 1 : 0,
-      pointerEvents: state.zoltar === 'visible' ? 'auto' : 'none',
-      transform: state.zoltar === 'visible' ? 'scale(1)' : 'scale(0.9)',
-      transition: `all ${Math.round(duration * (TRANSITION_TIMES.zoltar.end - TRANSITION_TIMES.zoltar.start))}ms ease-in-out`,
-    },
-    smoke: {
-      opacity: state.smoke === 'visible' ? 1 : 0,
-      pointerEvents: state.smoke === 'visible' ? 'auto' : 'none',
-      transition: `all ${Math.round(duration * (TRANSITION_TIMES.smoke.middle - TRANSITION_TIMES.smoke.start))}ms ease-in-out`,
-    },
-    fortune: {
-      opacity: state.fortune === 'visible' ? 1 : 0,
-      transform:
-        state.fortune === 'visible' ? 'translateY(0)' : 'translateY(16px)',
-      pointerEvents: state.fortune === 'visible' ? 'auto' : 'none',
-      transition: `all ${Math.round(duration * (TRANSITION_TIMES.fortune.end - TRANSITION_TIMES.fortune.start))}ms ease-in-out`,
-    },
   }
 
-  return {
-    state,
-    styles,
-    handleClick,
-  }
+  return { styles, beginTransition }
 }
