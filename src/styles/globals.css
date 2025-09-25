@@ -16,7 +16,9 @@
   --text-3xl: 8rem;
   --text-2xl: 6.5rem;
   --text-xl: 4rem;
+  --text-lg: 2.75rem;
   --text-md: 2rem;
+  --text-sm: 1.5rem;
 }
 
 html,

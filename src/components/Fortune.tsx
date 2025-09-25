@@ -18,7 +18,7 @@ export const Fortune: FC = () => {
         alt=""
       />
       <a
-        className="bg-black text-white rounded-3xl my-2.5 px-3 text-lg font-sans"
+        className="bg-black text-white rounded-3xl my-2.5 px-3 text-sm"
         download
         href={randomFortune.current}
       >

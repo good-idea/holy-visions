@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import Image from 'next/image'
 
 import { cn } from '@/utils'
+import { AFILogo } from '@/svg/afiLogo'
 
 type ZoltarProps = {
   handleTransition: () => void
@@ -9,8 +10,12 @@ type ZoltarProps = {
 
 export const Zoltar: FC<ZoltarProps> = ({ handleTransition }) => {
   return (
-    <div className="pt-8 md:pt-12">
-      <div className="mt-[-10%] mb-[-10%]">
+    <div className="pt-5">
+      <div className="w-[160px] md:w-[200px] mx-auto">
+        <AFILogo />
+      </div>
+
+      <div className="mt-[-5%] mb-[-10%]">
         <svg viewBox="0 0 400 150">
           <path
             id="arcPath"
