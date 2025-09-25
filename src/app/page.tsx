@@ -14,7 +14,10 @@ export default function Home() {
     <div
       id="background"
       style={styles.background}
-      className={cn('flex flex-col items-center h-[100dvh]', 'p-4 md:p-9')}
+      className={cn(
+        'flex flex-col items-center h-[100dvh] overflow-scroll',
+        'p-4 md:p-9',
+      )}
     >
       <div className="mix-blend-difference z-[100] top-0 w-full flex justify-center pointer-none">
         <Image
