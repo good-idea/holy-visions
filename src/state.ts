@@ -37,6 +37,7 @@ const CONFIG: Record<string, ElementConfig> = {
   smoke: {
     duration: 0.5,
     transitionProperties: 'opacity',
+    initialStyles: { opacity: 0.5 },
     styleTransitions: [{ time: 0.5, style: { opacity: 0 } }],
   },
   fortune: {
