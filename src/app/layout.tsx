@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import '../styles/globals.css'
 
 export const metadata: Metadata = {
@@ -13,7 +14,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-black overflow-hidden">{children}</body>
+      <head>
+        <script
+          async
+          src="https://js.sonikit.com/v1/embed.js?key=68d5ca1a9edd26453cd07cd0"
+          type="module"
+        />
+      </head>
+      <body className="bg-black overflow-hidden">
+        <div className="sonikit-patch" data-id="68d5d2d99edd26453cd09250"></div>
+        {children}
+      </body>
     </html>
   )
 }
