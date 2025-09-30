@@ -25,11 +25,11 @@ export const Fortune: FC = () => {
         alt="Your fortune"
       />
       <a
-        className="bg-black text-white rounded-3xl my-2.5 px-3 text-sm"
+        className="bg-black text-white rounded-3xl my-2.5 px-4 text-sm"
         download
         href={randomFortune.current}
       >
-        Download Your Fortune
+        Download Your Vision
       </a>
     </div>
   )
