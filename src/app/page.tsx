@@ -8,11 +8,12 @@ import { Zoltar } from '@/components/Zoltar'
 import { Fortune } from '@/components/Fortune'
 import { AudioControls } from '@/components/AudioControls'
 
+const AUDIO_URL =
+  'https://good-idea-studio.sfo3.cdn.digitaloceanspaces.com/holy-visions-loop.mp3'
+
 export default function Home() {
   const { styles, beginTransition } = useTransitionStyles({ duration: 8000 })
-  const { audioState, playAudio, pauseAudio } = useAudio(
-    '/holy-visions-loop.mp3',
-  )
+  const { audioState, playAudio, pauseAudio } = useAudio(AUDIO_URL)
   const [embedIsVisible, setEmbedIsVisible] = useState(false)
 
   const showEmbed = () => setEmbedIsVisible(true)
