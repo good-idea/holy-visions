@@ -68,10 +68,12 @@ export default function Home() {
         <div className="sonikit-patch" data-id="68d5d2d99edd26453cd09250" />
       </div>
 
-      <AudioControls
-        isPlaying={audioState.isPlaying}
-        onTogglePlayPause={togglePlayPause}
-      />
+      <div className="fixed bottom-3 right-3 md:bottom-6 md:right-6 z-50">
+        <AudioControls
+          isPlaying={audioState.isPlaying}
+          onTogglePlayPause={togglePlayPause}
+        />
+      </div>
     </div>
   )
 }

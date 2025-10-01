@@ -47,8 +47,7 @@ export const AudioControls: FC<AudioControlsProps> = ({
     <button
       onClick={onTogglePlayPause}
       className={cn(
-        'fixed bottom-6 right-6 z-50',
-        'w-12 h-12 rounded-full',
+        'w-9 h-9 md:w-12 md:h-12 rounded-full',
         'bg-black/70 hover:bg-black/90',
         'text-white',
         'flex items-center justify-center',
