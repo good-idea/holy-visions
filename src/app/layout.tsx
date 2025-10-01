@@ -31,6 +31,7 @@ export default function RootLayout({
           src="https://js.sonikit.com/v1/embed.js?key=68d5ca1a9edd26453cd07cd0"
           type="module"
         />
+        <link rel="stylesheet" href="https://use.typekit.net/pwk4hoh.css" />
       </head>
       <body className="bg-black overflow-hidden">{children}</body>
     </html>

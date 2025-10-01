@@ -12,6 +12,7 @@
   --color-pink: var(--afi-pink);
   --color-purple: var(--afi-purple);
   --font-serif: 'Big Caslon FB', serif;
+  --font-display: 'gothiks', sans-serif;
 
   --text-3xl: 8rem;
   --text-2xl: 6.5rem;
@@ -29,6 +30,6 @@ body {
 body {
   background: black;
   color: var(--color-pink);
-  font-family: var(--font-serif);
+  font-family: var(--font-display);
   height: 100%;
 }

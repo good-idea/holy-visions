@@ -20,7 +20,7 @@ export const Zoltar: FC<ZoltarProps> = ({ handleTransition }) => {
         <Image src="/mystic.png" width={1080} height={1920} alt="" />
       </button>
       <button
-        className="cursor-pointer bg-purple text-white rounded-3xl px-4 text-sm"
+        className="uppercase cursor-pointer bg-purple text-white rounded-3xl px-4 text-sm"
         onClick={handleTransition}
       >
         Reveal your vision

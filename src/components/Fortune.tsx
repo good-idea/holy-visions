@@ -29,14 +29,14 @@ export const Fortune: FC<FortuneProps> = (props) => {
       />
       <div className="flex flex-col mt-2 gap-3 my-2.5">
         <a
-          className="bg-black text-white rounded-3xl px-4 text-sm"
+          className="uppercase bg-black text-white rounded-3xl px-4 text-sm"
           download
           href={randomFortune.current}
         >
           Download Your Vision
         </a>
         <button
-          className="cursor-pointer bg-black text-white rounded-3xl px-4 text-sm"
+          className="uppercase cursor-pointer bg-black text-white rounded-3xl px-4 text-sm"
           onClick={props.onClickEmbedCta}
         >
           Pre-save the Album
