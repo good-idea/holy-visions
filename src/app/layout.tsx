@@ -4,6 +4,7 @@ import '../styles/globals.css'
 export const metadata: Metadata = {
   title: 'AFI | Holy Visions',
   description: 'Your Holy Vision awaits…',
+  metadataBase: new URL('https://www.holyvisions.net'),
   icons: {
     icon: '/favicon.jpg',
     shortcut: '/favicon.jpg',
