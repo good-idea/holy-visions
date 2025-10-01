@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   description: 'Your Holy Vision awaits…',
   icons: {
     icon: '/favicon.jpg',
+    shortcut: '/favicon.jpg',
+    apple: '/favicon.jpg',
+    other: {
+      rel: '/favicon.jpg',
+      url: '/favicon.jpg',
+    },
   },
   openGraph: {
     images: '/opengraph.png',
