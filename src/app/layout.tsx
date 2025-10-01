@@ -21,10 +21,7 @@ export default function RootLayout({
           type="module"
         />
       </head>
-      <body className="bg-black overflow-hidden">
-        <div className="sonikit-patch" data-id="68d5d2d99edd26453cd09250"></div>
-        {children}
-      </body>
+      <body className="bg-black overflow-hidden">{children}</body>
     </html>
   )
 }

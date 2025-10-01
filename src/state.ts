@@ -136,7 +136,6 @@ export const useTransitionStyles = ({
     clearTimeouts()
 
     const transitions = getAllTransitions(duration)
-    console.log(transitions)
 
     transitions.forEach((transition) => {
       const timeout = setTimeout(() => {

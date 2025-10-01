@@ -1,4 +1,3 @@
-'use client'
 import React, { FC, useState, useEffect } from 'react'
 import Image from 'next/image'
 
@@ -10,7 +9,11 @@ const getRandomFortune = (): string => {
   return `/fortunes/AFIVisionCards_Final_${num.toString().padStart(2, '0')}.jpg`
 }
 
-export const Fortune: FC = () => {
+type FortuneProps = {
+  onClickEmbedCta: () => void
+}
+
+export const Fortune: FC<FortuneProps> = (props) => {
   const randomFortune = React.useRef<string>(getRandomFortune())
   const [isMounted, setIsMounted] = useState(false)
   useEffect(() => setIsMounted(true), [])
@@ -24,13 +27,21 @@ export const Fortune: FC = () => {
         height={1920}
         alt="Your fortune"
       />
-      <a
-        className="bg-black text-white rounded-3xl my-2.5 px-4 text-sm"
-        download
-        href={randomFortune.current}
-      >
-        Download Your Vision
-      </a>
+      <div className="flex flex-col mt-2 gap-3 my-2.5">
+        <a
+          className="bg-black text-white rounded-3xl px-4 text-sm"
+          download
+          href={randomFortune.current}
+        >
+          Download Your Vision
+        </a>
+        <button
+          className="cursor-pointer bg-black text-white rounded-3xl px-4 text-sm"
+          onClick={props.onClickEmbedCta}
+        >
+          Pre-save the Album
+        </button>
+      </div>
     </div>
   )
 }
