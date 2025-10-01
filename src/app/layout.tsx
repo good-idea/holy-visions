@@ -4,6 +4,9 @@ import '../styles/globals.css'
 export const metadata: Metadata = {
   title: 'AFI | Holy Visions',
   description: 'Your Holy Vision awaits…',
+  icons: {
+    icon: '/favicon.jpg',
+  },
   openGraph: {
     images: '/opengraph.png',
   },
