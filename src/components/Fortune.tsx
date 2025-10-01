@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react'
 import Image from 'next/image'
 
 const FORTUNE_MIN = 1
-const FORTUNE_MAX = 19
+const FORTUNE_MAX = 18
 
 const getRandomFortune = (): string => {
   const num = Math.floor(Math.random() * FORTUNE_MAX) + FORTUNE_MIN
