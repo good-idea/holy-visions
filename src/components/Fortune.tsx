@@ -1,4 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
+import { STATIC_BASE_URL } from '@/config'
 import Image from 'next/image'
 
 const FORTUNE_MIN = 1
@@ -10,14 +11,12 @@ const getRandomFortune = (): string => {
 }
 
 const getFortuneUrl = (num: number): string => {
-  return `/fortunes/AFIVisionCards_Final_${num.toString().padStart(2, '0')}.jpg?v=2`
+  return `/fortunes/AFIVisionCards_Final_${num.toString().padStart(2, '0')}.jpg`
 }
 
 const getCloudFrontUrl = (localPath: string): string => {
   if (localPath.startsWith('/fortunes/')) {
-    const cloudFrontUrl =
-      process.env.NEXT_PUBLIC_CLOUDFRONT_URL ||
-      'https://your-distribution-id.cloudfront.net'
+    const cloudFrontUrl = STATIC_BASE_URL
     const imagePath = localPath.substring(1) // removes the leading '/'
     return `${cloudFrontUrl}/${imagePath}`
   }
