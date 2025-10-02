@@ -7,9 +7,9 @@ import { useAudio } from '@/hooks/useAudio'
 import { Zoltar } from '@/components/Zoltar'
 import { Fortune } from '@/components/Fortune'
 import { AudioControls } from '@/components/AudioControls'
+import { STATIC_BASE_URL } from '@/config'
 
-const AUDIO_URL =
-  'https://good-idea-studio.sfo3.cdn.digitaloceanspaces.com/holy-visions-loop.mp3'
+const AUDIO_URL = `${STATIC_BASE_URL}/holy-visions-loop.mp3`
 
 export default function Home() {
   const { styles, beginTransition } = useTransitionStyles({ duration: 8000 })
