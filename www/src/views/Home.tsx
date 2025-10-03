@@ -8,22 +8,18 @@ import { Zoltar } from '@/components/Zoltar'
 import { Fortune } from '@/components/Fortune'
 import { AudioControls } from '@/components/AudioControls'
 import { STATIC_BASE_URL } from '@/config'
-import { Settings } from '@/lib/sanity'
 
 const AUDIO_URL = `${STATIC_BASE_URL}/holy-visions-loop.mp3`
 
-type HomeProps = {
-  settingsPromise: Promise<Settings>
-}
+
 
 const getRandomFortune = (max: number): number => {
   return Math.floor(Math.random() * max) + 1
 }
 
-export function Home({ settingsPromise }: HomeProps) {
-  const settings = settingsPromise ? use(settingsPromise) : null
+export function Home() {
   const randomVision = useRef<number>(
-    getRandomFortune(settings?.contestEnabled ? 17 : 16),
+    getRandomFortune(16),
   )
   const isWinningFortune = randomVision.current === 17
 
