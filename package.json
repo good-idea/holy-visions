@@ -15,5 +15,9 @@
       "www": "workspace:www",
       "sanity": "workspace:sanity"
     }
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "typescript": "^5"
   }
 }
